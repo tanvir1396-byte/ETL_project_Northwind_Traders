@@ -1,4 +1,5 @@
 -- Total Revenue per Order
+CREATE OR REPLACE VIEW `elite-vista-474514-t0.gold_dataset_Northwind.total_revenue_per_order` AS
 SELECT
 orderid,
 ROUND(SUM ((unitprice * quantity)),2) as total_revenue
@@ -9,7 +10,7 @@ ORDER BY total_revenue DESC;
 
 -- Top  5 Selling Products
 
-
+CREATE OR REPLACE VIEW `elite-vista-474514-t0.gold_dataset_Northwind.top_five_selling_products` AS
 SELECT
 p.productname,
 sum(o.quantity)as total_quantity_sold,
@@ -23,7 +24,7 @@ LIMIT 5;
 
 
 -- Customer-wise Order Summary
-
+CREATE OR REPLACE VIEW `elite-vista-474514-t0.gold_dataset_Northwind.customer_wise_order_summary` as
 SELECT
 c.companyname,
 COUNT(DISTINCT d.orderid)as total_order,
@@ -39,7 +40,7 @@ ORDER BY total_order DESC;
 
 
 -- Employee Performance Analysis
-
+CREATE OR REPLACE VIEW `elite-vista-474514-t0.gold_dataset_Northwind.employee_perfomance` as
 SELECT
 concat(e.firstname, ' ' ,e.lastname) as full_name,
 
@@ -57,6 +58,7 @@ LIMIT 1;
 
 
 -- Category-wise Revenue Contribution
+CREATE OR REPLACE VIEW `elite-vista-474514-t0.gold_dataset_Northwind.category_revenue` as
 SELECT
 c.categoryname,
 ROUND(SUM (d.unitprice * d.quantity),2)as total_revenue
@@ -72,7 +74,7 @@ LIMIT 1;
 
 
 -- Category-wise Top Selling Product Analysis
-
+CREATE OR REPLACE VIEW `elite-vista-474514-t0.gold_dataset_Northwind.category_wise_top_selling` as
 WITH rank_table as (SELECT
 c.categoryname,
 p.productname,
@@ -99,7 +101,7 @@ FROM new_table
 WHERE ranking=1
 
 -- Customer Order Value Trend Analysis (LAG Function)
-
+CREATE OR REPLACE VIEW `elite-vista-474514-t0.gold_dataset_Northwind.customer_order_value_trend` as
 with table_one as (SELECT
 c.companyname,
 o.orderid,
@@ -122,7 +124,7 @@ FROM table_one
 
 
 -- Products Above Category Average Price
-
+CREATE OR REPLACE VIEW `elite-vista-474514-t0.gold_dataset_Northwind.products_above_category_average_price` as
 with new_table as (SELECT
 c.categoryname,
 p.productname,
@@ -143,7 +145,7 @@ WHERE new_table.unitprice>new_table.avg_price
 
 
 -- Top 2 Customers per Country by Total Spend
-
+CREATE OR REPLACE VIEW `elite-vista-474514-t0.gold_dataset_Northwind.top_two_customer_per_country` as
 with new_table as (SELECT
 c.country,
 c.companyname,
